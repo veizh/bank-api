@@ -52,7 +52,6 @@ const UserHtml = () => {
       firstName:first,
         lastName:last
     }
-    console.log(tmp);
     fetch("http://localhost:3001/api/v1/user/profile",{
       method:"put",
       headers: addHeaderJWT(),

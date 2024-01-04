@@ -79,7 +79,6 @@ const SignInForm = ()=>{
     </div>
     <button className="sign-in-button" onClick={async(e)=>{
       e.preventDefault()
-      console.log(username,password,rememberMe);
        handleconnection(setToken)
     }}>Sign In</button>
   </form>

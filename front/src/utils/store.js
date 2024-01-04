@@ -11,7 +11,6 @@ async function fetchUserData(){
     headers: addHeaderJWT(),
   })
   let response = await data.json()
-  console.log(response.body);
   return response.body
 }
 
@@ -24,7 +23,6 @@ const userStateSlice = createSlice({
     },
     reducers:{
         toggle:(state,action)=>{
-          console.log(state);
              state.online = action.payload
         },
         addUser:(state,action)=>{
