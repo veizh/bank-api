@@ -28,7 +28,8 @@ const UserHtml = () => {
       Navigate("/sign-in")
     }
   },[userState.status.online])
-  // data of all accounts => using a mock there but we need to get it from the back => second part of the project
+  
+  // data of all accounts => using a mock there, but we need to get it from the back => second part of the project
   const accounts = [
     {
       title: "Argent Bank Checking (x8349)",

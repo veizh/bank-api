@@ -9,67 +9,30 @@ basePath: /api/v2
 schemes:
   - http
 paths:
-  /user/accounts:
-    post:
+  /{userId}/transactions:
+    get:
       security:
         - Bearer: []
       tags:
         - Accounts
-      summary: User Accounts API
-      description: API for fetching All User's Accounts
+      summary: transactions of the last 30 days
+      description: API for getting all the transactions for the last 30 days
       parameters:
+        - in: path
+          name: userId
+          type: integer
+          required: true
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          type: string
           required: true
+     
       produces:
         - application/json
       responses:
         '200':
-          description: Accounts data retrieved successully
-          schema:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: integer
-                ammount:
-                  type: integer
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/account:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Accounts
-      summary: User Accounts API
-      description: API for fetching One user account
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: account's ID
-          required: true
-          schema:
-            type: object
-            properties:
-              id:
-                type: integer
-              date:
-                type: string
-                description: date of the day
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Account data for last 30 days retrieved successully
+          description: transactions for last 30 days retrieved successully
           schema:
             type: array
             items:
@@ -78,31 +41,48 @@ paths:
                 id:
                   type: integer
                   description: id of the transaction
-                ammount:
+                type:
+                  type: string
+                  description: transaction type
+                amount:
                   type: integer
-                  description: ammount of the transction
+                  description: amount of the transction
+                description:
+                  type: string
+                  description: description of the transction  
                 date:
                   type: string
                   description: date of the transaction
-                place:
+                notes:
                   type: string
-                  description: where you made the transaction
+                  description: notes of the transaction*
+                balance:
+                  type: integer
+                  description: balance of the account
+                category: 
+                  type: string
+                  description: category of the transaction
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transaction:
-    post:
+  /transaction/{transactionId}:
+    get:
       security:
         - Bearer: []
       tags:
         - Accounts
-      summary: User Profile API
-      description: API for fetching a user profile
+      summary: get one transaction by ID
+      description: API for fetching one transaction
       parameters:
         - in: header
+          type: string
           name: Authorization
           description: Attach Bearer JWT token
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
           required: true
       responses:
         '200':
@@ -113,24 +93,33 @@ paths:
               id:
                 type: integer
                 description: id of the transaction
-              ammount:
+              type:
+                  type: string
+                  description: transaction type
+              amount:
                 type: integer
                 description: ammount of the transction
+              description:
+                  type: string
+                  description: description of the transction  
+              balance:
+                type: integer
+                description: balance of the account
               date:
                 type: string
                 description: date of the transaction
-              place:
+              category:
                 type: string
-                description: where you made the transaction
-              reason:
+                description: category of the transaction
+              notes:
                 type: string
-                description: reason of the transaction
+                description: notes of the transaction
         '400':
           description: Invalid Fields
         '500':
           description: Internal Server Error
     put:
-      sercurity:
+      security:
         - Bearer: []
       tags:
         - Accounts
@@ -139,18 +128,26 @@ paths:
       parameters:
         - in: header
           name: Authorization
+          type: string
           description: Attach Bearer JWT token
+          required: true
+        - in: path
+          name: transactionId
+          type: integer
           required: true
         - in: body
           name: body
           description: Update transaction attributes
-          requiered: true
+       
           schema:
             type: object
             properties:
-              reason:
+              category:
                 type: string
-                description: reason of the transaction
+                description: category of the transaction
+              notes:
+                type: string 
+                description: notes of the transaction
       responses:
         '200':
           description: Transaction data updated successuly
@@ -160,18 +157,27 @@ paths:
               id:
                 type: integer
                 description: id of the transaction
-              ammount:
+              type:
+                  type: string
+                  description: transaction type
+              balance:
+                type: integer
+                description: balance of the account
+              description:
+                  type: string
+                  description: description of the transction  
+              amount:
                 type: integer
                 description: ammount of the transction
               date:
                 type: string
                 description: date of the transaction
-              place:
+              category:
                 type: string
-                description: where you made the transaction
-              reason:
+                description: new category of the transaction
+              notes:
                 type: string
-                description: new reason of the transaction
+                description: new notes of the transaction
         '400':
           description: Invalid Fields
         '500':
